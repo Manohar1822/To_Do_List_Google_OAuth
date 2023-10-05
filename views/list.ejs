@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List MMRCH</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="box" id="heading">
+        <h1><%=kindOfDay%></h1>
+    </div>
+    <div class="box">
+        <% newListItems.forEach(function(item){ %>
+            <form action="/delete" method="post">
+            <div class="item">
+                <%if(item.done==true){%>
+                    <input type="checkbox" checked name="check"  input onChange="this.form.submit()" value=<%=item._id%>  >
+                <%}else if(item.done!==true){%>
+                    <input type="checkbox" name="check"  input onChange="this.form.submit()" value=<%=item._id%>  >
+                <%}%>
+                    
+                <%if(item.done==true){%>
+                    <p class="done"><%=item.items%></p>
+                <%}else{%>
+                    <p class="notdone"><%=item.items%></p>
+                    <%}%>
+                <input type="hidden" name="checker" value=<%=item._id%>>
+                
+                <input type="hidden" name="listName" value="<%=kindOfDay%>">
+                <button type="submit" name="checkbox" value=<%= item._id %>>&#10060;</button>
+            </div>
+        </form>
+        <% });%>
+            
+
+                <form class="item" action="/" method="post">
+                    <input type="text" name="newItem" placeholder="Add New Task" autocomplete="off">
+                    <button class="subm" type="submit" name="list" value="<%=kindOfDay%>" >+</button>
+                </form>
+    </div>
+    
+
+    <div class="box" id="heading2">
+        <h1>Some More Lists</h1>
+    </div>
+
+    <div class="box2">
+
+        <form class="item" action="/routing" method="post">
+            <input type="text" name="newList" placeholder="Add New To-Do List Or Search List" autocomplete="off">
+            <button class="subm" type="submit" name="list" value="<%=kindOfDay%>" >+</button>
+        </form>
+
+        <% users.forEach(function(user){ %> 
+            <%if(user.name!=="Favicon.ico" && user.name!=="Delete" && user.name!=="D"){%>
+                <form action="/d" method="post">
+            <div class="item" >
+                
+                    <button type="submit" name="listId" value="<%=user._id%>">visit</button>
+                <p><%= user.name %> </p>
+                <button class="crossbutton" type="submit" name="cross" value=<%= user._id %>>&#10060;</button>
+            
+                
+            </div>
+            <input type="hidden" name="listName" value="<%=kindOfDay%>" style="float: right;">
+        </form>
+        <%}%>
+        <% }); %> 
+
+        
+        
+    </div>
+    <div  id="heading3">
+        <form action="/home" method="post">
+            <button class="boxM" type="submit">Today List Home Page</button>
+        </form>
+    </div>
+    
+    <footer><p>Site is developed and maintained by MMRCH Group</p></footer>
+
+</body>
+</html>
